@@ -1,132 +1,107 @@
-# SGS – Sistema de Gestão de Solicitações
+# SGS — Sistema de Gestão de Solicitações
 
-## 📌 Sobre o projeto
+MVP acadêmico, responsivo e executado diretamente no navegador para cadastrar, consultar e acompanhar solicitações de clientes. A interface segue os três protótipos definidos para o projeto.
 
-O **SGS – Sistema de Gestão de Solicitações** é um projeto acadêmico desenvolvido como Produto Mínimo Viável (MVP) do curso de Análise e Desenvolvimento de Sistemas.
+## Demonstração
 
-O objetivo é oferecer uma solução web simples para organizar, registrar e acompanhar solicitações de clientes, substituindo controles manuais realizados por mensagens e anotações.
+**Credenciais fictícias:**
 
-O projeto busca facilitar o gerenciamento das demandas, melhorar a organização das informações e otimizar o acompanhamento dos atendimentos.
+- Usuário: `demo@sgs.local`
+- Senha: `Sgs@2026`
 
-## 🎯 Objetivos
+## Funcionalidades
 
-- Centralizar o registro de solicitações.
-- Facilitar a consulta de informações.
-- Permitir o acompanhamento do status dos atendimentos.
-- Reduzir o risco de perda ou duplicidade de registros.
-- Oferecer uma interface simples, intuitiva e responsiva.
+- Acesso de demonstração com validação de credenciais.
+- Cadastro de cliente e solicitação (RF01 e RF02).
+- Listagem, pesquisa e filtros (RF03 e RF05).
+- Atualização para `Pendente`, `Em andamento` ou `Concluído` (RF04).
+- Mensagem de confirmação e destaque do novo registro.
+- Visualização detalhada da solicitação.
+- Resumo de clientes e cadastros.
+- Persistência local com `localStorage`.
+- Layout responsivo, navegação por teclado, foco visível e mensagens textuais.
 
-## ⚙️ Funcionalidades do MVP
+## Executar no navegador
 
-- Cadastro de clientes.
-- Cadastro de solicitações.
-- Consulta das solicitações registradas.
-- Atualização do status dos atendimentos.
-- Visualização de informações dos registros.
-- Autenticação de usuários.
+### Opção 1 — sem instalação
 
-**Status previstos:**
+Baixe ou clone o repositório e abra `index.html` em um navegador moderno.
 
-- Pendente
-- Em andamento
-- Concluído
+> Alguns navegadores aplicam regras específicas a arquivos locais. Se a persistência não funcionar, use a opção 2.
 
-## 💻 Tecnologias previstas
+### Opção 2 — servidor local simples
 
-| Tecnologia | Finalidade |
-| --- | --- |
-| Python 3.12 | Linguagem de programação |
-| Flask | Desenvolvimento da aplicação web |
-| SQLite | Banco de dados |
-| HTML5 | Estrutura das páginas |
-| CSS3 | Estilização da interface |
-| Bootstrap 5 | Interface responsiva |
-| JavaScript | Interatividade das telas |
+Com Python disponível:
 
-## 🏗️ Arquitetura
+```bash
+python -m http.server 8000
+```
 
-O sistema foi planejado utilizando o padrão **Model-View-Controller (MVC)**, com separação de responsabilidades:
+Acesse `http://localhost:8000`.
 
-- **Model:** representação e persistência dos dados.
-- **View:** apresentação das interfaces ao usuário.
-- **Controller:** processamento das requisições e regras da aplicação.
+Com Node.js disponível:
 
-Essa organização facilita a manutenção, os testes e futuras melhorias.
+```bash
+npx serve .
+```
 
-## 🖥️ Telas do sistema
+### Restaurar os dados de demonstração
 
-### Tela 1 – Página inicial
+No console do navegador, execute:
 
-Apresenta a listagem das solicitações, seus respectivos status e as opções de navegação.
+```js
+localStorage.removeItem('sgs.requests.v1');
+location.reload();
+```
 
-### Tela 2 – Nova solicitação
+## Publicar no GitHub Pages
 
-Permite registrar uma nova solicitação, informando cliente, telefone, assunto e descrição.
+1. Crie um repositório público chamado `sgs-gestao-solicitacoes`.
+2. Envie todos os arquivos deste projeto para a branch `main`.
+3. No GitHub, acesse **Settings → Pages**.
+4. Em **Build and deployment**, selecione **Deploy from a branch**.
+5. Escolha a branch `main`, pasta `/ (root)` e clique em **Save**.
+6. Aguarde a publicação e use o endereço informado pelo GitHub.
 
-### Tela 3 – Confirmação e consulta
+Como o projeto é estático, não exige etapa de compilação nem configuração de servidor.
 
-Apresenta a confirmação do cadastro e permite visualizar a solicitação registrada.
+## Estrutura
 
-## 🗄️ Modelo de dados
+```text
+.
+├── index.html
+├── css/styles.css
+├── js/app.js
+├── assets/favicon.svg
+├── manifest.webmanifest
+├── docs/
+│   ├── prototipos/
+│   └── screenshots/
+├── tests/manual-checklist.md
+├── SECURITY.md
+└── README.md
+```
 
-O sistema foi planejado com duas entidades principais:
+## Requisitos atendidos
 
-**Cliente**
+| ID | Requisito | Evidência no sistema |
+|---|---|---|
+| RF01 | Cadastrar cliente | Campo obrigatório no formulário; cliente aparece nas consultas |
+| RF02 | Cadastrar solicitação | Validação, número sequencial e status inicial `Pendente` |
+| RF03 | Consultar solicitações | Tabela, pesquisa, filtros e janela de detalhes |
+| RF04 | Atualizar status | Seletor na janela de detalhes |
+| RF05 | Filtrar solicitações | Filtros por cliente, status, período e busca livre |
 
-- ID
-- Nome
-- Telefone
+## Limites de segurança
 
-**Solicitação**
+Esta edição foi criada para funcionar somente no navegador e usa dados fictícios. A tela de acesso é uma barreira de demonstração; credenciais presentes no código front-end **não constituem autenticação segura**. Não armazene dados pessoais ou sigilosos.
 
-- ID
-- Cliente
-- Assunto
-- Descrição
-- Data de criação
-- Status
+Para uso real, seria necessário um backend com autenticação, controle de autorização, banco de dados servidor, validação no servidor, proteção de sessão e registro de auditoria. Consulte `SECURITY.md`.
 
-Um cliente poderá possuir várias solicitações.
+## Tecnologias
 
-## 🔒 Segurança e acessibilidade
+HTML5, CSS3 e JavaScript ES2022, sem frameworks ou dependências externas.
 
-O projeto prevê:
+## Licença
 
-- Autenticação de usuários.
-- Proteção das senhas por hash seguro.
-- Validação dos campos obrigatórios.
-- Controle de acesso às funcionalidades.
-- Navegação por teclado.
-- Contraste adequado.
-- Mensagens claras de erro e confirmação.
-- Interface responsiva.
-
-## 🌱 Objetivo de Desenvolvimento Sustentável
-
-O projeto está relacionado ao **ODS 9 – Indústria, Inovação e Infraestrutura**.
-
-A proposta busca incentivar o uso da tecnologia para modernizar processos e melhorar a eficiência operacional de pequenas organizações.
-
-## 📚 Contexto acadêmico
-
-**Projeto:** SGS – Sistema de Gestão de Solicitações
-
-**Curso:** Análise e Desenvolvimento de Sistemas
-
-**Tipo:** Projeto acadêmico / MVP
-
-**Autora:** Aretha Lira de Lima
-
-## 🚀 Status do projeto
-
-**Em desenvolvimento.**
-
-O planejamento, os requisitos e os protótipos das três telas foram elaborados. A implementação do sistema funcional está em andamento.
-
-## 🔮 Melhorias futuras
-
-- Filtros avançados de solicitações.
-- Relatórios gerenciais.
-- Notificações automáticas.
-- Histórico de alterações.
-- Integração com outros sistemas.
+MIT — consulte `LICENSE`.

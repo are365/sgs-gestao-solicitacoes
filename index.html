@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SGS — Sistema de Gestão de Solicitações: MVP acadêmico para cadastrar, consultar e acompanhar solicitações.">
+  <meta name="theme-color" content="#0b4f91">
+  <title>SGS — Sistema de Gestão de Solicitações</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
+
+  <section id="loginView" class="login-view" aria-labelledby="loginTitle">
+    <div class="login-brand" aria-hidden="true">
+      <div class="login-brand-inner">
+        <span class="brand-mark brand-mark-large">S</span>
+        <p class="eyebrow">Sistema web</p>
+        <h1>Organize solicitações.<br>Acompanhe resultados.</h1>
+        <p>Centralize demandas de clientes em um fluxo simples, acessível e confiável.</p>
+        <div class="login-features">
+          <span>Cadastro ágil</span><span>Consulta centralizada</span><span>Status atualizado</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="login-panel">
+      <form id="loginForm" class="login-card" novalidate>
+        <div class="mobile-login-brand">
+          <span class="brand-mark">S</span>
+          <strong>SGS</strong>
+        </div>
+        <p class="eyebrow">Bem-vindo(a)</p>
+        <h2 id="loginTitle">Acesse o SGS</h2>
+        <p class="form-intro">Entre com as credenciais de demonstração para gerenciar solicitações.</p>
+
+        <div id="loginError" class="alert alert-error is-hidden" role="alert" tabindex="-1">
+          <span aria-hidden="true">!</span>
+          <p><strong>Não foi possível entrar.</strong><br>Verifique o usuário e a senha.</p>
+        </div>
+
+        <div class="field">
+          <label for="loginEmail">Usuário ou e-mail</label>
+          <div class="input-with-icon">
+            <span class="input-icon" aria-hidden="true">@</span>
+            <input id="loginEmail" name="email" type="email" autocomplete="username" required aria-describedby="loginEmailHint" value="demo@sgs.local">
+          </div>
+          <small id="loginEmailHint">Conta de demonstração: demo@sgs.local</small>
+          <span class="field-error" data-error-for="loginEmail"></span>
+        </div>
+
+        <div class="field">
+          <label for="loginPassword">Senha</label>
+          <div class="input-with-icon password-field">
+            <span class="input-icon" aria-hidden="true">●</span>
+            <input id="loginPassword" name="password" type="password" autocomplete="current-password" required value="Sgs@2026">
+            <button id="togglePassword" class="icon-button password-toggle" type="button" aria-label="Mostrar senha" aria-pressed="false">Mostrar</button>
+          </div>
+          <small>Senha de demonstração: Sgs@2026</small>
+          <span class="field-error" data-error-for="loginPassword"></span>
+        </div>
+
+        <button class="button button-primary button-block" type="submit">Entrar</button>
+        <p class="privacy-note">Ambiente acadêmico com dados fictícios. Não use dados pessoais reais.</p>
+      </form>
+    </div>
+  </section>
+
+  <div id="appView" class="app-shell is-hidden">
+    <header class="topbar">
+      <button id="menuButton" class="icon-button menu-button" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="sidebar">☰</button>
+      <a class="app-brand" href="#solicitacoes" aria-label="SGS — Página de solicitações">
+        <span class="brand-mark">S</span>
+        <span><strong>SGS</strong><em>— Sistema de Gestão de Solicitações</em></span>
+      </a>
+      <div class="topbar-actions">
+        <button id="notificationButton" class="icon-button notification-button" type="button" aria-label="Ver solicitações pendentes">
+          <span aria-hidden="true">♢</span><span id="notificationCount" class="notification-count">0</span>
+        </button>
+        <div class="user-menu-wrap">
+          <button id="userMenuButton" class="user-button" type="button" aria-expanded="false" aria-controls="userMenu">
+            <span class="avatar" aria-hidden="true">U</span>
+            <span class="user-label">Olá, Usuário</span>
+            <span aria-hidden="true">⌄</span>
+          </button>
+          <div id="userMenu" class="user-menu is-hidden" role="menu">
+            <button id="logoutButton" type="button" role="menuitem">Sair do sistema</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <aside id="sidebar" class="sidebar" aria-label="Navegação principal">
+      <nav>
+        <a href="#solicitacoes" data-route="solicitacoes"><span aria-hidden="true">⌂</span>Início</a>
+        <a href="#solicitacoes" data-route="solicitacoes" class="active"><span aria-hidden="true">▤</span>Solicitações</a>
+        <a href="#clientes" data-route="clientes"><span aria-hidden="true">♙</span>Clientes</a>
+        <a href="#cadastros" data-route="cadastros"><span aria-hidden="true">▱</span>Cadastros</a>
+        <button type="button" data-placeholder="Relatórios"><span aria-hidden="true">▥</span>Relatórios</button>
+        <button type="button" data-placeholder="Configurações"><span aria-hidden="true">⚙</span>Configurações</button>
+      </nav>
+      <div class="sidebar-footer">
+        <span>MVP acadêmico</span>
+        <small>Versão 1.0.0</small>
+      </div>
+    </aside>
+    <div id="sidebarBackdrop" class="sidebar-backdrop is-hidden" aria-hidden="true"></div>
+
+    <main id="conteudo" class="main-content" tabindex="-1">
+      <section id="requestsPage" class="page" aria-labelledby="requestsTitle">
+        <div class="page-heading">
+          <div class="heading-copy">
+            <span class="page-icon" aria-hidden="true">▤</span>
+            <div><h1 id="requestsTitle">Solicitações</h1><p>Organize, acompanhe e gerencie suas solicitações.</p></div>
+          </div>
+          <button id="newRequestButton" class="button button-primary" type="button"><span aria-hidden="true">＋</span> Nova Solicitação</button>
+        </div>
+
+        <div id="successAlert" class="alert alert-success is-hidden" role="status" aria-live="polite" tabindex="-1">
+          <span class="alert-icon" aria-hidden="true">✓</span>
+          <p><strong>Solicitação cadastrada com sucesso!</strong><br><span id="successDetail">O registro foi incluído na lista.</span></p>
+          <button id="closeSuccess" class="icon-button" type="button" aria-label="Fechar mensagem">×</button>
+        </div>
+
+        <form id="filterForm" class="filter-card" aria-label="Filtros de solicitações">
+          <div class="field compact-field"><label for="clientFilter">Cliente</label><select id="clientFilter"><option value="">Todos</option></select></div>
+          <div class="field compact-field"><label for="statusFilter">Status</label><select id="statusFilter"><option value="">Todos</option><option>Pendente</option><option>Em andamento</option><option>Concluído</option></select></div>
+          <div class="field compact-field"><label for="periodFilter">Período</label><select id="periodFilter"><option value="">Todo o período</option><option value="today">Hoje</option><option value="7">Últimos 7 dias</option><option value="30">Últimos 30 dias</option></select></div>
+          <div class="field search-field"><label class="sr-only" for="searchFilter">Pesquisar solicitações</label><span aria-hidden="true">⌕</span><input id="searchFilter" type="search" placeholder="Buscar por nº, assunto ou descrição"></div>
+          <button id="clearFilters" class="button button-ghost filter-clear is-hidden" type="button">Limpar filtros</button>
+        </form>
+
+        <div class="table-card">
+          <div class="table-scroll">
+            <table>
+              <caption class="sr-only">Solicitações cadastradas</caption>
+              <thead><tr>
+                <th scope="col"><button class="sort-button" type="button" data-sort="id">Nº <span aria-hidden="true">↕</span></button></th>
+                <th scope="col"><button class="sort-button" type="button" data-sort="subject">Assunto <span aria-hidden="true">↕</span></button></th>
+                <th scope="col"><button class="sort-button" type="button" data-sort="client">Cliente <span aria-hidden="true">↕</span></button></th>
+                <th scope="col"><button class="sort-button" type="button" data-sort="date">Data da Solicitação <span aria-hidden="true">↕</span></button></th>
+                <th scope="col"><button class="sort-button" type="button" data-sort="status">Status <span aria-hidden="true">↕</span></button></th>
+                <th scope="col">Ações</th>
+              </tr></thead>
+              <tbody id="requestRows"></tbody>
+            </table>
+            <div id="emptyState" class="empty-state is-hidden">
+              <span aria-hidden="true">⌕</span><h2>Nenhuma solicitação encontrada</h2><p>Altere os filtros ou cadastre uma nova solicitação.</p>
+            </div>
+          </div>
+          <div class="table-footer">
+            <p id="tableSummary" aria-live="polite"></p>
+            <nav id="pagination" class="pagination" aria-label="Paginação das solicitações"></nav>
+          </div>
+        </div>
+      </section>
+
+      <section id="formPage" class="page is-hidden" aria-labelledby="formTitle">
+        <div class="page-heading form-page-heading">
+          <div class="heading-copy">
+            <span class="page-icon" aria-hidden="true">▤</span>
+            <div><h1 id="formTitle">Nova Solicitação</h1><p>Preencha as informações para registrar uma nova solicitação.</p></div>
+          </div>
+        </div>
+
+        <form id="requestForm" class="form-card" novalidate>
+          <div id="formErrorSummary" class="alert alert-error is-hidden" role="alert" tabindex="-1"><span aria-hidden="true">!</span><p><strong>Revise os campos destacados.</strong><br>Preencha os campos obrigatórios.</p></div>
+          <div class="form-grid">
+            <div class="field"><label for="clientName">Nome do Cliente <span aria-hidden="true">*</span></label><input id="clientName" name="clientName" type="text" maxlength="80" autocomplete="organization" required placeholder="Ex.: Clínica Bem-Estar"><span class="field-error" data-error-for="clientName"></span></div>
+            <div class="field"><label for="phone">Telefone <span class="optional">(opcional)</span></label><input id="phone" name="phone" type="tel" maxlength="16" autocomplete="tel" inputmode="tel" placeholder="(00) 00000-0000"><span class="field-error" data-error-for="phone"></span></div>
+            <div class="field field-full"><label for="subject">Assunto <span aria-hidden="true">*</span></label><input id="subject" name="subject" type="text" list="subjectOptions" maxlength="100" required placeholder="Ex.: Solicitação de acesso ao sistema"><datalist id="subjectOptions"><option value="Solicitação de acesso ao sistema"><option value="Inclusão de novo usuário"><option value="Correção de cadastro"><option value="Dúvida sobre atendimento"></datalist><span class="field-error" data-error-for="subject"></span></div>
+            <div class="field field-full"><label for="description">Descrição da Solicitação <span aria-hidden="true">*</span></label><textarea id="description" name="description" rows="4" maxlength="500" required placeholder="Descreva a solicitação de forma objetiva."></textarea><div class="field-meta"><span class="field-error" data-error-for="description"></span><span id="descriptionCount">0/500</span></div></div>
+            <div class="field"><label for="requestDate">Data da Solicitação</label><input id="requestDate" name="requestDate" type="text" readonly></div>
+            <div class="field"><label for="initialStatus">Status</label><div id="initialStatus" class="readonly-status"><span aria-hidden="true">◷</span> Pendente</div></div>
+          </div>
+          <div class="form-actions"><button id="cancelRequest" class="button button-secondary" type="button">Cancelar</button><button class="button button-primary" type="submit"><span aria-hidden="true">▣</span> Salvar Solicitação</button></div>
+        </form>
+      </section>
+
+      <section id="clientsPage" class="page is-hidden" aria-labelledby="clientsTitle">
+        <div class="page-heading"><div class="heading-copy"><span class="page-icon" aria-hidden="true">♙</span><div><h1 id="clientsTitle">Clientes</h1><p>Consulte os clientes registrados nas solicitações.</p></div></div></div>
+        <div class="summary-grid" id="clientCards"></div>
+      </section>
+
+      <section id="registersPage" class="page is-hidden" aria-labelledby="registersTitle">
+        <div class="page-heading"><div class="heading-copy"><span class="page-icon" aria-hidden="true">▱</span><div><h1 id="registersTitle">Cadastros</h1><p>Resumo dos registros do MVP.</p></div></div></div>
+        <div id="registerSummary" class="summary-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="modalBackdrop" class="modal-backdrop is-hidden">
+    <section id="requestModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+      <div class="modal-header"><div><p class="eyebrow">Solicitação <span id="modalRequestId"></span></p><h2 id="modalTitle">Detalhes da solicitação</h2></div><button id="modalClose" class="icon-button" type="button" aria-label="Fechar janela">×</button></div>
+      <div id="modalContent" class="modal-content"></div>
+      <form id="statusForm" class="status-form"><label for="modalStatus">Atualizar status</label><select id="modalStatus"><option>Pendente</option><option>Em andamento</option><option>Concluído</option></select><button class="button button-primary" type="submit">Salvar status</button></form>
+    </section>
+  </div>
+
+  <div id="toastRegion" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
