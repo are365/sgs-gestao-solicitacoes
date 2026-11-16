@@ -1,4 +1,4 @@
-name: SGS - Testes automatizados
+name: SGS - Testes e cobertura
 
 on:
   push:
@@ -12,20 +12,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Baixar codigo
+      - name: Baixar código
         uses: actions/checkout@v4
 
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
+      - name: Configurar Python
+        uses: actions/setup-python@v5
         with:
-          node-version: '22'
+          python-version: '3.12'
+          cache: pip
 
-      - name: Verificar sintaxe JavaScript
-        run: node --check js/app.js
-
-      - name: Verificar arquivos essenciais
+      - name: Instalar dependências de teste
         run: |
-          test -f index.html
-          test -f js/app.js
-          test -d tests
-          echo "Arquivos essenciais encontrados."
+          python -m pip install --upgrade pip
+          pip install -r requirements-test.txt
+          playwright install --with-deps chromium
+
+      - name: Executar testes unitários e de integração
+        run: |
+          mkdir -p evidence
+          pytest -v --junitxml=evidence/junit-results.xml | tee evidence/test-run.txt
+
+      - name: Publicar evidências
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sgs-evidencias-testes
+          path: evidence/
+          if-no-files-found: warn
