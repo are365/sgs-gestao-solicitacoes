@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><title>SGS Test Harness</title><style>.is-hidden{display:none}.open{display:block}</style></head>
+<body>
+  <section id="loginView">
+    <form id="loginForm">
+      <div class="field"><label for="loginEmail">E-mail</label><input id="loginEmail" aria-invalid="false"><span id="loginEmail-error" class="field-error" data-error-for="loginEmail"></span></div>
+      <div class="field"><label for="loginPassword">Senha</label><input id="loginPassword" type="password" aria-invalid="false"><span id="loginPassword-error" class="field-error" data-error-for="loginPassword"></span></div>
+      <button id="togglePassword" type="button">Mostrar</button>
+      <div id="loginError" class="is-hidden" tabindex="-1">Credenciais inválidas</div>
+      <button type="submit">Entrar</button>
+    </form>
+  </section>
+
+  <section id="appView" class="is-hidden">
+    <button id="menuButton" type="button" aria-expanded="false">Menu</button>
+    <aside id="sidebar">
+      <a data-route="solicitacoes" href="#solicitacoes">Solicitações</a>
+      <a data-route="clientes" href="#clientes">Clientes</a>
+      <a data-route="cadastros" href="#cadastros">Cadastros</a>
+    </aside>
+    <div id="sidebarBackdrop" class="is-hidden"></div>
+    <div class="user-menu-wrap">
+      <button id="userMenuButton" type="button" aria-expanded="false">Usuário</button>
+      <div id="userMenu" class="is-hidden"><button id="logoutButton" type="button">Sair</button></div>
+    </div>
+    <button id="notificationButton" type="button"><span id="notificationCount"></span></button>
+    <button type="button" data-placeholder="Ajuda">Ajuda</button>
+
+    <main id="conteudo" tabindex="-1">
+      <section id="requestsPage" class="page">
+        <button id="newRequestButton" type="button">Nova Solicitação</button>
+        <form id="filterForm">
+          <select id="clientFilter"><option value="">Todos</option></select>
+          <select id="statusFilter"><option value="">Todos</option><option>Pendente</option><option>Em andamento</option><option>Concluído</option></select>
+          <select id="periodFilter"><option value="">Todo o período</option><option value="today">Hoje</option><option value="7">7 dias</option><option value="30">30 dias</option></select>
+          <input id="searchFilter">
+          <button id="clearFilters" class="is-hidden" type="button">Limpar</button>
+        </form>
+        <button class="sort-button" type="button" data-sort="id">Ordenar ID</button>
+        <button class="sort-button" type="button" data-sort="subject">Ordenar assunto</button>
+        <button class="sort-button" type="button" data-sort="date">Ordenar data</button>
+        <table><tbody id="requestRows"></tbody></table>
+        <div id="emptyState" class="is-hidden">Nenhum resultado</div>
+        <p id="tableSummary"></p>
+        <nav id="pagination"></nav>
+        <div id="successAlert" class="is-hidden" tabindex="-1"><span id="successDetail"></span><button id="closeSuccess" type="button">Fechar</button></div>
+      </section>
+
+      <section id="formPage" class="page is-hidden">
+        <form id="requestForm">
+          <div id="formErrorSummary" class="is-hidden" tabindex="-1">Revise os campos</div>
+          <div class="field"><label for="clientName">Cliente</label><input id="clientName" aria-invalid="false"><span id="clientName-error" class="field-error" data-error-for="clientName"></span></div>
+          <div class="field"><label for="phone">Telefone</label><input id="phone" aria-invalid="false"><span id="phone-error" class="field-error" data-error-for="phone"></span></div>
+          <div class="field"><label for="subject">Assunto</label><input id="subject" aria-invalid="false"><span id="subject-error" class="field-error" data-error-for="subject"></span></div>
+          <div class="field"><label for="description">Descrição</label><textarea id="description" maxlength="500" aria-invalid="false"></textarea><span id="description-error" class="field-error" data-error-for="description"></span></div>
+          <output id="descriptionCount">0/500</output>
+          <input id="requestDate" readonly>
+          <button id="cancelRequest" type="button">Cancelar</button>
+          <button type="submit">Salvar</button>
+        </form>
+      </section>
+
+      <section id="clientsPage" class="page is-hidden"><div id="clientCards"></div></section>
+      <section id="registersPage" class="page is-hidden"><div id="registerSummary"></div></section>
+    </main>
+  </section>
+
+  <div id="modalBackdrop" class="is-hidden">
+    <section id="requestModal" tabindex="-1">
+      <button id="modalClose" type="button">Fechar</button>
+      <h2 id="modalTitle"></h2><span id="modalRequestId"></span>
+      <div id="modalContent"></div>
+      <form id="statusForm"><select id="modalStatus"><option>Pendente</option><option>Em andamento</option><option>Concluído</option></select><button type="submit">Atualizar</button></form>
+    </section>
+  </div>
+  <div id="toastRegion"></div>
+  <script src="../js/app.js"></script>
+</body>
+</html>
