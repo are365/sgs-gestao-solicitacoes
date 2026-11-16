@@ -1,0 +1,31 @@
+name: SGS - Testes automatizados
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verificar sintaxe JavaScript
+        run: node --check js/app.js
+
+      - name: Verificar arquivos essenciais
+        run: |
+          test -f index.html
+          test -f js/app.js
+          test -d tests
+          echo "Arquivos essenciais encontrados."
