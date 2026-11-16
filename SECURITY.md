@@ -24,3 +24,20 @@ Use exclusivamente dados fictícios. Não registre dados pessoais, médicos, fin
 ## Evolução recomendada para produção
 
 Uma versão real deve adotar backend (por exemplo, Flask), banco gerenciado, senhas com hash forte, cookies de sessão `HttpOnly`, `Secure` e `SameSite`, proteção CSRF, autorização por rota, consultas parametrizadas, validação no servidor, cabeçalhos de segurança, HTTPS, logs de auditoria, backups e política de retenção/LGPD.
+
+
+Revisão técnica do MVP
+Arquitetura
+A aplicação utiliza HTML, CSS e JavaScript, com armazenamento local no navegador. A estrutura é adequada para demonstração acadêmica.
+
+Legibilidade
+O código está organizado em arquivos separados, facilitando sua leitura e manutenção.
+
+Segurança
+O MVP não possui autenticação nem banco de dados centralizado. Por isso, deve utilizar apenas dados fictícios.
+
+Melhorias futuras
+Implementar autenticação segura.
+Adicionar banco de dados centralizado.
+Ampliar os testes automatizados.
+Melhorar os recursos de acessibilidade.
