@@ -1,4 +1,5 @@
 SGS – Sistema de Gestão de Solicitações
+
 📌 Sobre o projeto
 
 O SGS – Sistema de Gestão de Solicitações é um projeto acadêmico desenvolvido como Produto Mínimo Viável (MVP) do curso de Análise e Desenvolvimento de Sistemas.
@@ -13,6 +14,7 @@ Facilitar a consulta de informações.
 Permitir o acompanhamento do status dos atendimentos.
 Reduzir o risco de perda ou duplicidade de registros.
 Oferecer uma interface simples, intuitiva e responsiva.
+
 ⚙️ Funcionalidades do MVP
 Cadastro de clientes.
 Cadastro de solicitações.
@@ -22,10 +24,12 @@ Visualização de informações dos registros.
 Autenticação de usuários.
 
 Status previstos:
+Pendente;
 
-Pendente
-Em andamento
-Concluído
+Em andamento;
+
+Concluído;
+
 💻 Tecnologias previstas
 Tecnologia	Finalidade
 Python 3.12	Linguagem de programação
@@ -35,6 +39,7 @@ HTML5	Estrutura das páginas
 CSS3	Estilização da interface
 Bootstrap 5	Interface responsiva
 JavaScript	Interatividade das telas
+
 🏗️ Arquitetura
 
 O sistema foi planejado utilizando o padrão Model-View-Controller (MVC), com separação de responsabilidades:
